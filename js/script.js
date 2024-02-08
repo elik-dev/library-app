@@ -29,9 +29,34 @@ function addBookToLibrary() {
     // add book object to the library array and to the page
 }
 
+// extract function that creates book card from buildBookshelf
+
 function buildBookshelf() {
-    // iterate through the library array and add books to the page
-    // create new book button
+    myLibrary.forEach((book) => {
+        const bookCard = document.createElement("div");
+        bookCard.classList.add("card");
+        bookCard.classList.add(`data-${myLibrary.indexOf(book)}`);
+
+        const bookTitle = document.createElement("h2");
+        bookTitle.classList.add("book-title");
+        bookTitle.textContent = `${book.title}`;
+
+        const bookAuthor = document.createElement("p");
+        bookAuthor.classList.add("book-author");
+        bookAuthor.textContent = `${book.author}`;
+
+        const bookStatus = document.createElement("p");
+        bookStatus.classList.add("book-status");
+        bookStatus.textContent = `${book.readStatus ? "Read" : "Not read"}`;
+
+        const newBookButton = document.querySelector(".new-book-btn");
+
+        bookCard.append(bookTitle, bookAuthor, bookStatus);
+        const bookshelf = document.querySelector(".bookshelf");
+        bookshelf.insertBefore(bookCard, newBookButton);
+
+        // add remove book button
+    });
 }
 
 function removeBookFromLibrary() {
