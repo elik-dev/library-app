@@ -21,7 +21,14 @@ function addBookToLibrary() {
     // add book object to the library array and to the page
 }
 
-// extract function that creates book card from buildBookshelf
+function removeBookFromLibrary() {
+    // remove book from the library array and from the page
+}
+
+function toggleReadStatus() {
+    // add a method to book constructor that toggles its read status
+    // change read status of the book
+}
 
 function buildBookshelf() {
     myLibrary.forEach((book) => {
@@ -29,6 +36,15 @@ function buildBookshelf() {
         bookCard.classList.add("card");
         bookCard.setAttribute("data-book", myLibrary.indexOf(book));
 
+        const removeBookButton = document.createElement("button");
+        removeBookButton.classList.add("remove-btn");
+        removeBookButton.setAttribute("type", "button");
+        removeBookButton.textContent = "x";
+        removeBookButton.addEventListener("click", () => {
+            bookCard.remove();
+            myLibrary.splice(myLibrary.indexOf(book), 1);
+        });
+        
         const bookTitle = document.createElement("h2");
         bookTitle.classList.add("book-title");
         bookTitle.textContent = `${book.title}`;
@@ -43,19 +59,10 @@ function buildBookshelf() {
 
         const newBookButton = document.querySelector(".new-book-btn");
 
-        bookCard.append(bookTitle, bookAuthor, bookStatus);
+        bookCard.append(removeBookButton, bookTitle, bookAuthor, bookStatus);
         const bookshelf = document.querySelector(".bookshelf");
         bookshelf.insertBefore(bookCard, newBookButton);
-
-        // add remove book button
     });
 }
 
-function removeBookFromLibrary() {
-    // remove book from the library array and from the page
-}
-
-function toggleReadStatus() {
-    // add a method to book constructor that toggles its read status
-    // change read status of the book
-}
+window.addEventListener("load", buildBookshelf);
