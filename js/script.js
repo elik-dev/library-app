@@ -20,6 +20,10 @@ function Book(title, author, readStatus) {
     this.title = title;
     this.author = author;
     this.readStatus = readStatus;
+    this.toggleReadStatus = () => {
+        this.readStatus = !this.readStatus;
+        return;
+    }
 }
 
 function addBookToLibrary() {
@@ -64,5 +68,6 @@ function removeBookFromLibrary() {
 }
 
 function toggleReadStatus() {
+    // add a method to book constructor that toggles its read status
     // change read status of the book
 }
