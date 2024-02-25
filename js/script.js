@@ -1,19 +1,7 @@
 const myLibrary = [
-    {
-        title: "Flowers for Algernon",
-        author: "Daniel Keyes",
-        readStatus: true
-    },
-    {
-        title: "The Way of Zen",
-        author: "Alan Watts",
-        readStatus: true
-    },
-    {
-        title: "Do Androids Dream of Electric Sheep?",
-        author: "Philip K. Dick",
-        readStatus: false
-    }
+    new Book("Flowers for Algernon", "Daniel Keyes", true),
+    new Book("The Way of Zen", "Alan Watts", true),
+    new Book("Do Androids Dream of Electric Sheep?", "Philip K. Dick", false)
 ];
 
 function Book(title, author, readStatus) {
@@ -39,7 +27,7 @@ function buildBookshelf() {
     myLibrary.forEach((book) => {
         const bookCard = document.createElement("div");
         bookCard.classList.add("card");
-        bookCard.classList.add(`data-${myLibrary.indexOf(book)}`);
+        bookCard.setAttribute("data-book", myLibrary.indexOf(book));
 
         const bookTitle = document.createElement("h2");
         bookTitle.classList.add("book-title");
