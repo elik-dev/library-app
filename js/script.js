@@ -16,7 +16,79 @@ function Book(title, author, readStatus) {
 
 function addBookToLibrary() {
     // create form to get user input
+    const newBookDialog = document.createElement("dialog");
+    newBookDialog.classList.add("new-book-dialog");
+
+    const newBookForm = document.createElement("form");
+    newBookForm.classList.add("new-book-form");
+
+    const newBookHeading = document.createElement("h2");
+    newBookHeading.classList.add("new-book-heading");
+    newBookHeading.textContent = "Add new book";
+
+    const newBookTitleLabel = document.createElement("label");
+    newBookTitleLabel.classList.add("new-book-title-label");
+    newBookTitleLabel.textContent = "Title:";
+    newBookTitleLabel.setAttribute("for", "new-book-input-label");
+
+    const newBookTitleInput = document.createElement("input");
+    newBookTitleInput.id = "new-book-input-label";
+
+    const newBookAuthorLabel = document.createElement("label");
+    newBookAuthorLabel.classList.add("new-book-author-label");
+    newBookAuthorLabel.textContent = "Author:";
+    newBookAuthorLabel.setAttribute("for", "new-book-author-input");
+
+    const newBookAuthorInput = document.createElement("input");
+    newBookAuthorInput.id = "new-book-author-input";
+
+    const newBookReadStatusText = document.createElement("p");
+    newBookReadStatusText.classList.add("new-book-read-status-text");
+    newBookReadStatusText.textContent = "Read status:";
+
+    const newBookReadStatusOption1 = document.createElement("input");
+    newBookReadStatusOption1.id = "new-book-read-status-option1";
+    newBookReadStatusOption1.setAttribute("type", "radio");
+    newBookReadStatusOption1.setAttribute("name", "read-status");
+    newBookReadStatusOption1.setAttribute("value", "false");
+
+    const newBookReadStatusLabel1 = document.createElement("label");
+    newBookReadStatusLabel1.classList.add("new-book-read-status-label1");
+    newBookReadStatusLabel1.textContent = "Not read";
+    newBookReadStatusLabel1.setAttribute("for", "new-book-read-status-option1");
+
+    const newBookReadStatusOption2 = document.createElement("input");
+    newBookReadStatusOption2.id = "new-book-read-status-option2";
+    newBookReadStatusOption2.setAttribute("type", "radio");
+    newBookReadStatusOption2.setAttribute("name", "read-status");
+    newBookReadStatusOption2.setAttribute("value", "true");
+
+    const newBookReadStatusLabel2 = document.createElement("label");
+    newBookReadStatusLabel2.classList.add("new-book-read-status-label2");
+    newBookReadStatusLabel2.textContent = "Read";
+    newBookReadStatusLabel2.setAttribute("for", "new-book-read-status-option2");
+
+    const newBookCancelButton = document.createElement("button");
+    newBookCancelButton.classList.add("new-book-cancel-btn");
+    newBookCancelButton.textContent = "Cancel";
+    newBookCancelButton.setAttribute("formmethod", "dialog");
+
+    const newBookConfirmButton = document.createElement("button");
+    newBookConfirmButton.classList.add("new-book-confirm-btn");
+    newBookConfirmButton.textContent = "Confirm";
+
+    const htmlMain = document.querySelector("main");
+    htmlMain.appendChild(newBookDialog);
+    newBookDialog.appendChild(newBookForm);
+    newBookForm.append(newBookHeading, newBookTitleLabel, newBookTitleInput, newBookAuthorLabel, newBookAuthorInput, newBookReadStatusText, newBookReadStatusOption1, newBookReadStatusLabel1, newBookReadStatusOption2, newBookReadStatusLabel2, newBookCancelButton, newBookConfirmButton);
+
+    newBookDialog.showModal();
+
     // create book object based on user input
+    newBookConfirmButton.addEventListener("click", (event) => {
+        event.preventDefault();
+        newBookDialog.close();
+    })
     // create remove book button and attach it to the book
     // add book object to the library array and to the page
 }
