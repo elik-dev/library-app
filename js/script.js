@@ -12,10 +12,10 @@ function Book(title, author, readStatus) {
         this.readStatus = !this.readStatus;
         return;
     }
-}
+};
 
 function addBookToLibrary() {
-    // create form to get user input
+    // create form
     const newBookDialog = document.createElement("dialog");
     newBookDialog.classList.add("new-book-dialog");
 
@@ -51,6 +51,7 @@ function addBookToLibrary() {
     newBookReadStatusOption1.setAttribute("type", "radio");
     newBookReadStatusOption1.setAttribute("name", "read-status");
     newBookReadStatusOption1.setAttribute("value", "false");
+    newBookReadStatusOption1.setAttribute("checked", "");
 
     const newBookReadStatusLabel1 = document.createElement("label");
     newBookReadStatusLabel1.classList.add("new-book-read-status-label1");
@@ -84,57 +85,65 @@ function addBookToLibrary() {
 
     newBookDialog.showModal();
 
-    // create book object based on user input
+    // create book using input data and display it on the page
     newBookConfirmButton.addEventListener("click", (event) => {
         event.preventDefault();
+        const checkedReadStatus = document.querySelector("input[name='read-status']:checked");
+        const newBook = new Book(newBookTitleInput.value, newBookAuthorInput.value, Boolean(checkedReadStatus.value));
+        myLibrary.push(newBook);
+        createBookCard(newBook);
         newBookDialog.close();
-    })
-    // create remove book button and attach it to the book
-    // add book object to the library array and to the page
-}
+    });
 
-function removeBookFromLibrary() {
-    // remove book from the library array and from the page
-}
+    newBookDialog.addEventListener("close", (event) => {
+        newBookDialog.remove();
+    });
+};
 
-function toggleReadStatus() {
-    // add a method to book constructor that toggles its read status
-    // change read status of the book
-}
+function createBookCard(book) {
+    const bookCard = document.createElement("div");
+    bookCard.classList.add("card");
+    bookCard.setAttribute("data-book", myLibrary.indexOf(book));
+
+    const removeBookButton = document.createElement("button");
+    removeBookButton.classList.add("remove-btn");
+    removeBookButton.setAttribute("type", "button");
+    removeBookButton.textContent = "x";
+    removeBookButton.addEventListener("click", () => {
+        bookCard.remove();
+        myLibrary.splice(myLibrary.indexOf(book), 1);
+    });
+
+    const bookTitle = document.createElement("h2");
+    bookTitle.classList.add("book-title");
+    bookTitle.textContent = `${book.title}`;
+
+    const bookAuthor = document.createElement("p");
+    bookAuthor.classList.add("book-author");
+    bookAuthor.textContent = `${book.author}`;
+
+    const bookStatus = document.createElement("p");
+    bookStatus.classList.add("book-status");
+    bookStatus.textContent = `${book.readStatus ? "Read" : "Not read"}`;
+    bookStatus.addEventListener("click", (event) => {
+        myLibrary[myLibrary.indexOf(book)].toggleReadStatus();
+        bookStatus.textContent = `${book.readStatus ? "Read" : "Not read"}`;
+    });
+
+    const newBookButton = document.querySelector(".new-book-btn");
+
+    bookCard.append(removeBookButton, bookTitle, bookAuthor, bookStatus);
+    const bookshelf = document.querySelector(".bookshelf");
+    bookshelf.insertBefore(bookCard, newBookButton);
+};
 
 function buildBookshelf() {
     myLibrary.forEach((book) => {
-        const bookCard = document.createElement("div");
-        bookCard.classList.add("card");
-        bookCard.setAttribute("data-book", myLibrary.indexOf(book));
-
-        const removeBookButton = document.createElement("button");
-        removeBookButton.classList.add("remove-btn");
-        removeBookButton.setAttribute("type", "button");
-        removeBookButton.textContent = "x";
-        removeBookButton.addEventListener("click", () => {
-            bookCard.remove();
-            myLibrary.splice(myLibrary.indexOf(book), 1);
-        });
-        
-        const bookTitle = document.createElement("h2");
-        bookTitle.classList.add("book-title");
-        bookTitle.textContent = `${book.title}`;
-
-        const bookAuthor = document.createElement("p");
-        bookAuthor.classList.add("book-author");
-        bookAuthor.textContent = `${book.author}`;
-
-        const bookStatus = document.createElement("p");
-        bookStatus.classList.add("book-status");
-        bookStatus.textContent = `${book.readStatus ? "Read" : "Not read"}`;
-
-        const newBookButton = document.querySelector(".new-book-btn");
-
-        bookCard.append(removeBookButton, bookTitle, bookAuthor, bookStatus);
-        const bookshelf = document.querySelector(".bookshelf");
-        bookshelf.insertBefore(bookCard, newBookButton);
-    });
-}
+       createBookCard(book);
+})};
 
 window.addEventListener("load", buildBookshelf);
+const newBookButton = document.querySelector(".new-book-btn");
+newBookButton.addEventListener("click", (event) => {
+    addBookToLibrary();
+});
