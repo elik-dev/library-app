@@ -11,11 +11,11 @@ function Book(title, author, readStatus) {
     this.toggleReadStatus = () => {
         this.readStatus = !this.readStatus;
         return;
-    }
+    };
 };
 
-function addBookToLibrary() {
-    // create form
+function createNewBookDialog() {
+    // create and show the dialog
     const newBookDialog = document.createElement("dialog");
     newBookDialog.classList.add("new-book-dialog");
 
@@ -72,7 +72,6 @@ function addBookToLibrary() {
     const newBookCancelButton = document.createElement("button");
     newBookCancelButton.classList.add("new-book-cancel-btn");
     newBookCancelButton.textContent = "Cancel";
-    newBookCancelButton.setAttribute("formmethod", "dialog");
 
     const newBookConfirmButton = document.createElement("button");
     newBookConfirmButton.classList.add("new-book-confirm-btn");
@@ -85,13 +84,16 @@ function addBookToLibrary() {
 
     newBookDialog.showModal();
 
-    // create book using input data and display it on the page
+    // add events
+    newBookCancelButton.addEventListener("click", (event) => {
+        event.preventDefault();
+        newBookDialog.close();
+    })
+
     newBookConfirmButton.addEventListener("click", (event) => {
         event.preventDefault();
         const checkedReadStatus = document.querySelector("input[name='read-status']:checked");
-        const newBook = new Book(newBookTitleInput.value, newBookAuthorInput.value, Boolean(checkedReadStatus.value));
-        myLibrary.push(newBook);
-        createBookCard(newBook);
+        addBookToLibrary(newBookTitleInput.value, newBookAuthorInput.value, checkedReadStatus.value === "true");
         newBookDialog.close();
     });
 
@@ -137,13 +139,20 @@ function createBookCard(book) {
     bookshelf.insertBefore(bookCard, newBookButton);
 };
 
+function addBookToLibrary(title, author, readStatus) {
+    let newBook = new Book(title, author, readStatus);
+    myLibrary.push(newBook);
+    createBookCard(newBook);
+};
+
 function buildBookshelf() {
     myLibrary.forEach((book) => {
-       createBookCard(book);
-})};
+        createBookCard(book);
+    });
+};
 
 window.addEventListener("load", buildBookshelf);
 const newBookButton = document.querySelector(".new-book-btn");
-newBookButton.addEventListener("click", (event) => {
-    addBookToLibrary();
+newBookButton.addEventListener("click", () => {
+    createNewBookDialog();
 });
