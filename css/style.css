@@ -46,9 +46,11 @@ main {
     height: 300px;
     background-color: #51252F;
     color: #DDE5ED;
-    padding: 8px;
     border-radius: 8px;
     box-shadow: 0 0 4px rgba(37, 40, 42, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .card:hover {
@@ -57,16 +59,63 @@ main {
     box-shadow: 0 0 8px rgba(37, 40, 42, 0.8);
 }
 
-.card:active {
-    scale: 1;
-    transition: all ease-in-out 0.1s;
-    box-shadow: 0 0 4px rgba(37, 40, 42, 0.8);
+.card-top {
+    display: flex;
+    flex-direction: column;
+    padding: 8px 8px 0;
 }
 
-footer {
+.book-author {
+    align-self: center;
+    margin: 0;
+}
+
+.remove-btn {
+    align-self: end;
+}
+
+.book-status {
+    margin: 0;
+    padding: 8px 0;
+    border-radius: 0 0 8px 8px;
+    background-color: rgba(128, 128, 128, 0.5);
+    user-select: none;
+    transition: all linear 0.1s;
+}
+
+.book-status:hover {
+    background-color: rgba(192, 192, 192, 0.5);
+}
+
+.book-status:active {
+    background-color: #DDE5ED;
+}
+
+.new-book-btn {
+    font-size: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+}
+
+footer,
+.book-status {
     text-align: center;
 }
 
 footer a {
     color: #DDE5ED;
+}
+
+/* dialog styles */
+
+dialog {
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0 0 8px rgba(37, 40, 42, 0.8);
+}
+
+dialog::backdrop {
+    backdrop-filter: blur(4px);
 }
