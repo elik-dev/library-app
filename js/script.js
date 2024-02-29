@@ -107,6 +107,12 @@ function createBookCard(book) {
     bookCard.classList.add("card");
     bookCard.setAttribute("data-book", myLibrary.indexOf(book));
 
+    const topDiv = document.createElement("div");
+    topDiv.classList.add("card-top");
+
+    const bottomDiv = document.createElement("div");
+    bottomDiv.classList.add("card-bottom");
+
     const removeBookButton = document.createElement("button");
     removeBookButton.classList.add("remove-btn");
     removeBookButton.setAttribute("type", "button");
@@ -134,7 +140,10 @@ function createBookCard(book) {
 
     const newBookButton = document.querySelector(".new-book-btn");
 
-    bookCard.append(removeBookButton, bookTitle, bookAuthor, bookStatus);
+    topDiv.append(removeBookButton, bookAuthor, bookTitle);
+    bottomDiv.append(bookStatus);
+
+    bookCard.append(topDiv, bottomDiv);
     const bookshelf = document.querySelector(".bookshelf");
     bookshelf.insertBefore(bookCard, newBookButton);
 };
