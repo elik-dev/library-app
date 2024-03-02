@@ -58,6 +58,9 @@ function createNewBookDialog() {
     newBookReadStatusText.classList.add("new-book-read-status-text");
     newBookReadStatusText.textContent = "Read status:";
 
+    const optionGroup1 = document.createElement("div");
+    optionGroup1.classList.add("option-group1");
+
     const newBookReadStatusOption1 = document.createElement("input");
     newBookReadStatusOption1.id = "new-book-read-status-option1";
     newBookReadStatusOption1.setAttribute("type", "radio");
@@ -69,6 +72,9 @@ function createNewBookDialog() {
     newBookReadStatusLabel1.classList.add("new-book-read-status-label1");
     newBookReadStatusLabel1.textContent = "Not read";
     newBookReadStatusLabel1.setAttribute("for", "new-book-read-status-option1");
+
+    const optionGroup2 = document.createElement("div");
+    optionGroup2.classList.add("option-group2");
 
     const newBookReadStatusOption2 = document.createElement("input");
     newBookReadStatusOption2.id = "new-book-read-status-option2";
@@ -99,9 +105,9 @@ function createNewBookDialog() {
     newBookAuthorRow.append(newBookAuthorLabel, newBookAuthorInput);
     newBookReadStatusRow.append(newBookReadStatusText,
         newBookReadStatusInputGroup);
-    newBookReadStatusInputGroup.append(newBookReadStatusOption1,
-        newBookReadStatusLabel1, newBookReadStatusOption2,
-        newBookReadStatusLabel2);
+    newBookReadStatusInputGroup.append(optionGroup1, optionGroup2);
+    optionGroup1.append(newBookReadStatusOption1, newBookReadStatusLabel1);
+    optionGroup2.append(newBookReadStatusOption2, newBookReadStatusLabel2)
     newBookButtonsRow.append(newBookCancelButton, newBookConfirmButton);
     newBookForm.append(newBookHeading, newBookTitleRow, newBookAuthorRow,
         newBookReadStatusRow, newBookButtonsRow);
