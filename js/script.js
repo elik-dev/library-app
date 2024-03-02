@@ -80,7 +80,11 @@ function createNewBookDialog() {
     const htmlMain = document.querySelector("main");
     htmlMain.appendChild(newBookDialog);
     newBookDialog.appendChild(newBookForm);
-    newBookForm.append(newBookHeading, newBookTitleLabel, newBookTitleInput, newBookAuthorLabel, newBookAuthorInput, newBookReadStatusText, newBookReadStatusOption1, newBookReadStatusLabel1, newBookReadStatusOption2, newBookReadStatusLabel2, newBookCancelButton, newBookConfirmButton);
+    newBookForm.append(newBookHeading, newBookTitleLabel, newBookTitleInput,
+        newBookAuthorLabel, newBookAuthorInput, newBookReadStatusText,
+        newBookReadStatusOption1, newBookReadStatusLabel1,
+        newBookReadStatusOption2, newBookReadStatusLabel2, newBookCancelButton,
+        newBookConfirmButton);
 
     newBookDialog.showModal();
 
@@ -92,8 +96,10 @@ function createNewBookDialog() {
 
     newBookConfirmButton.addEventListener("click", (event) => {
         event.preventDefault();
-        const checkedReadStatus = document.querySelector("input[name='read-status']:checked");
-        addBookToLibrary(newBookTitleInput.value, newBookAuthorInput.value, checkedReadStatus.value === "true");
+        const checkedReadStatus =
+        document.querySelector("input[name='read-status']:checked");
+        addBookToLibrary(newBookTitleInput.value, newBookAuthorInput.value,
+            checkedReadStatus.value === "true");
         newBookDialog.close();
     });
 
