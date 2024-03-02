@@ -26,13 +26,19 @@ function createNewBookDialog() {
     newBookHeading.classList.add("new-book-heading");
     newBookHeading.textContent = "Add new book";
 
+    const newBookTitleRow = document.createElement("div");
+    newBookTitleRow.classList.add("new-book-title-row");
+
     const newBookTitleLabel = document.createElement("label");
     newBookTitleLabel.classList.add("new-book-title-label");
     newBookTitleLabel.textContent = "Title:";
-    newBookTitleLabel.setAttribute("for", "new-book-input-label");
+    newBookTitleLabel.setAttribute("for", "new-book-title-input");
 
     const newBookTitleInput = document.createElement("input");
-    newBookTitleInput.id = "new-book-input-label";
+    newBookTitleInput.id = "new-book-title-input";
+
+    const newBookAuthorRow = document.createElement("div");
+    newBookAuthorRow.classList.add("new-book-author-row");
 
     const newBookAuthorLabel = document.createElement("label");
     newBookAuthorLabel.classList.add("new-book-author-label");
@@ -41,6 +47,12 @@ function createNewBookDialog() {
 
     const newBookAuthorInput = document.createElement("input");
     newBookAuthorInput.id = "new-book-author-input";
+
+    const newBookReadStatusRow = document.createElement("div");
+    newBookReadStatusRow.classList.add("new-book-read-status-row");
+
+    const newBookReadStatusInputGroup = document.createElement("div");
+    newBookReadStatusInputGroup.classList.add("new-book-read-status-input-grp");
 
     const newBookReadStatusText = document.createElement("p");
     newBookReadStatusText.classList.add("new-book-read-status-text");
@@ -69,6 +81,9 @@ function createNewBookDialog() {
     newBookReadStatusLabel2.textContent = "Read";
     newBookReadStatusLabel2.setAttribute("for", "new-book-read-status-option2");
 
+    const newBookButtonsRow = document.createElement("div");
+    newBookButtonsRow.classList.add("new-book-buttons-row");
+
     const newBookCancelButton = document.createElement("button");
     newBookCancelButton.classList.add("new-book-cancel-btn");
     newBookCancelButton.textContent = "Cancel";
@@ -80,11 +95,16 @@ function createNewBookDialog() {
     const htmlMain = document.querySelector("main");
     htmlMain.appendChild(newBookDialog);
     newBookDialog.appendChild(newBookForm);
-    newBookForm.append(newBookHeading, newBookTitleLabel, newBookTitleInput,
-        newBookAuthorLabel, newBookAuthorInput, newBookReadStatusText,
-        newBookReadStatusOption1, newBookReadStatusLabel1,
-        newBookReadStatusOption2, newBookReadStatusLabel2, newBookCancelButton,
-        newBookConfirmButton);
+    newBookTitleRow.append(newBookTitleLabel, newBookTitleInput);
+    newBookAuthorRow.append(newBookAuthorLabel, newBookAuthorInput);
+    newBookReadStatusRow.append(newBookReadStatusText,
+        newBookReadStatusInputGroup);
+    newBookReadStatusInputGroup.append(newBookReadStatusOption1,
+        newBookReadStatusLabel1, newBookReadStatusOption2,
+        newBookReadStatusLabel2);
+    newBookButtonsRow.append(newBookCancelButton, newBookConfirmButton);
+    newBookForm.append(newBookHeading, newBookTitleRow, newBookAuthorRow,
+        newBookReadStatusRow, newBookButtonsRow);
 
     newBookDialog.showModal();
 
@@ -97,7 +117,7 @@ function createNewBookDialog() {
     newBookConfirmButton.addEventListener("click", (event) => {
         event.preventDefault();
         const checkedReadStatus =
-        document.querySelector("input[name='read-status']:checked");
+            document.querySelector("input[name='read-status']:checked");
         addBookToLibrary(newBookTitleInput.value, newBookAuthorInput.value,
             checkedReadStatus.value === "true");
         newBookDialog.close();
