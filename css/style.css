@@ -70,7 +70,7 @@ main {
 }
 
 .book-author {
-    align-self: center;
+    text-align: center;
     margin: 0;
 }
 
