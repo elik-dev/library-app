@@ -14,6 +14,90 @@ function Book(title, author, readStatus) {
     };
 };
 
+function toTitleCase(string) {
+    let originalString = string.split(" ");
+    let titleCaseString = [];
+    const exceptionList = [
+        "abaft",
+        "about",
+        "above",
+        "afore",
+        "after",
+        "along",
+        "amid",
+        "among",
+        "an",
+        "apud",
+        "as",
+        "aside",
+        "at",
+        "atop",
+        "below",
+        "but",
+        "by",
+        "circa",
+        "down",
+        "for",
+        "from",
+        "given",
+        "in",
+        "into",
+        "lest",
+        "like",
+        "mid",
+        "midst",
+        "minus",
+        "near",
+        "next",
+        "of",
+        "off",
+        "on",
+        "onto",
+        "out",
+        "over",
+        "pace",
+        "past",
+        "per",
+        "plus",
+        "pro",
+        "qua",
+        "round",
+        "sans",
+        "save",
+        "since",
+        "than",
+        "thru",
+        "till",
+        "times",
+        "to",
+        "under",
+        "until",
+        "unto",
+        "up",
+        "upon",
+        "via",
+        "vice",
+        "with",
+        "worth",
+        "the",
+        "and",
+        "nor",
+        "or",
+        "yet",
+        "so"
+    ];
+    originalString.forEach((word) => {
+        if (originalString.indexOf(word) > 0 &&
+            exceptionList.indexOf(word) > 0) {
+            titleCaseString.push(word.toLowerCase());
+        } else {
+            titleCaseString.push(word.charAt(0).toUpperCase() +
+                word.substr(1).toLowerCase());
+        }
+    });
+    return titleCaseString.join(" ");
+}
+
 function createNewBookDialog() {
     // create and show the dialog
     const newBookDialog = document.createElement("dialog");
@@ -36,6 +120,7 @@ function createNewBookDialog() {
 
     const newBookTitleInput = document.createElement("input");
     newBookTitleInput.id = "new-book-title-input";
+    newBookTitleInput.setAttribute("maxlength", "78");
 
     const newBookAuthorRow = document.createElement("div");
     newBookAuthorRow.classList.add("new-book-author-row");
@@ -47,6 +132,7 @@ function createNewBookDialog() {
 
     const newBookAuthorInput = document.createElement("input");
     newBookAuthorInput.id = "new-book-author-input";
+    newBookAuthorInput.setAttribute("maxlength", "40");
 
     const newBookReadStatusRow = document.createElement("div");
     newBookReadStatusRow.classList.add("new-book-read-status-row");
@@ -114,7 +200,6 @@ function createNewBookDialog() {
 
     newBookDialog.showModal();
 
-    // add events
     newBookCancelButton.addEventListener("click", (event) => {
         event.preventDefault();
         newBookDialog.close();
@@ -124,9 +209,18 @@ function createNewBookDialog() {
         event.preventDefault();
         const checkedReadStatus =
             document.querySelector("input[name='read-status']:checked");
-        addBookToLibrary(newBookTitleInput.value, newBookAuthorInput.value,
-            checkedReadStatus.value === "true");
-        newBookDialog.close();
+        if (!newBookTitleInput.value && !newBookAuthorInput.value) {
+            alert("Please fill out the author and title fields before submitting the new book form");
+        } else if (!newBookTitleInput.value) {
+            alert("Please fill out the title field before submitting the new book form");
+        } else if (!newBookAuthorInput.value) {
+            alert("Please fill out the author field before submitting the new book form");
+        } else {
+            addBookToLibrary(toTitleCase(newBookTitleInput.value),
+                toTitleCase(newBookAuthorInput.value),
+                checkedReadStatus.value === "true");
+            newBookDialog.close();
+        }
     });
 
     newBookDialog.addEventListener("close", (event) => {
