@@ -141,7 +141,7 @@ footer a {
     border-radius: 8px;
     border: none;
     box-shadow: 0 0 8px rgba(37, 40, 42, 0.8);
-    min-width: max(300px, 40vw);
+    min-width: min(40vw, 600px);
 }
 
 .new-book-form {
