@@ -74,6 +74,12 @@ main {
     margin: 0;
 }
 
+.book-author,
+.book-title {
+    width: 100%;
+    word-wrap: break-word;
+}
+
 .remove-btn {
     align-self: end;
     font-weight: bold;
